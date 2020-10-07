@@ -1,0 +1,347 @@
+{
+    "swagger": "2.0",
+    
+    "info": {
+        "version": "1.0.0",
+        "title": "Rest full apis",
+        "description": "This is demo",
+        "contact": {
+            "email": "isrardk@hotmail.com",
+            "name": "Israr"
+            },
+        "license": {
+            "name": "MIT",
+            "url": "http://opensource.ogr/licences/MIT"
+        }
+    },
+    "host": "localhost:8080/api",
+   
+    "tags": [
+                {
+                    "name": "languages",
+                    "description": "API for languages in the System"
+                },
+                {
+                    "name": "language_string",
+                    "description": "API for language string"
+                },
+                {
+                    "name": "user",
+                    "description": "API for users"
+                }
+            ],
+    "produces":["application/json"],
+    "consumes":["application/json"],
+    "schemes": ["http","https"],
+    "securityDefinitions":{
+       
+          "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header"
+          }
+    },
+    
+    "definitions": {
+        "PostLanguage": {
+            "type": "object",
+            "properties": {
+                
+                "lang_name": {
+                    "type": "string"
+                },
+                "lang_code": {
+                    "type": "string"
+                },
+                "lang_status": {
+                    "type": "boolean"
+                },
+                "lang_is_rtl": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Language": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                
+                "lang_name": {
+                    "type": "string"
+                },
+                "lang_code": {
+                    "type": "string"
+                },
+                "lang_status": {
+                    "type": "boolean"
+                },
+                "lang_is_rtl": {
+                    "type": "boolean"
+                },
+                "lang_created_at": {
+                    "type":"string"
+                },
+                "lang_updated_at": {
+                    "type":"string"
+                }
+            }
+        },
+        "GetLanguages":{
+            "type":"object",
+            "properties": {
+                "code":{
+                    "type":"string",
+                    "example":200
+                    
+                },
+                "success":{
+                    "type":"boolean",
+                    "example":true
+                },
+                "data":{
+                    "type":"array",
+                    
+                    "items": {
+                        "type":"object",
+                          "$ref": "#/definitions/Language"
+                    }
+                    
+                }
+            }
+        },
+        "CreatedLanguage":{
+            "type":"object",
+            "properties": {
+                "code":{
+                    "type":"string",
+                    "example":201
+                    
+                },
+                "success":{
+                    "type":"boolean",
+                    "example":true
+                },
+                "data":{
+                    "type":"object",
+                    "$ref": "#/definitions/Language"
+                }
+            }
+        },
+        "NewUser":{
+            "type":"object",
+            "properties": {
+                "email":{
+                    "type":"string",
+                    "example":"isrardk@hotmail.com"
+                    
+                },
+                "password":{
+                    "type":"string",
+                    "example":"password321"
+                },
+                "user_role":{
+                    "type":"string",
+                    "example": "admin"
+                }
+            }
+
+        },
+        "NewToken":{
+            "type":"object",
+            "properties": {
+                "code":{
+                    "type":"string",
+                    "example":"200"
+                    
+                },
+                "sucess":{
+                    "type":"boolean",
+                    "example":true
+                },
+                "access_token":{
+                    "type":"string"
+                }
+            }
+
+        }
+    },
+    "paths": {
+        "/languages":{
+            
+            "get": {
+                "tags": [
+                    "languages"
+                ],
+                
+                "summary": "Get all languages in the system.",
+                
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema":{
+                            "$ref": "#/definitions/GetLanguages"
+                        }
+                       
+                    }
+
+                },
+                "security":[
+                    {"api_key":[]}
+                ]
+            },
+            "post": {
+                "tags": [
+                    "languages"
+                
+                ],
+                "parameters": [
+                    {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Language that we want to add to the system ",
+                    "schema": {
+                        "$ref": "#/definitions/PostLanguage"
+                    }
+                    }
+                ],
+                "summary": "Add a new language",
+                "responses": {
+                    "201":{
+                        "description": "A new language is added",
+                        "schema":{
+                            "$ref": "#/definitions/CreatedLanguage"
+                        }
+                    }
+
+                }
+                
+            },
+            "put": {
+                "tags": [
+                    "languages"
+                
+                ],
+                "parameters": [
+                    {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Language that we want to edit ",
+                    "schema": {
+                        "$ref": "#/definitions/Language"
+                    }
+                    }
+                ],
+                "summary": "Update a  language",
+                "responses": {
+                    "201":{
+                        "description": "Updated language",
+                        "schema":{
+                            "$ref": "#/definitions/Language"
+                        }
+                    }
+
+                }
+            }
+           
+        },
+        "/languages/{_id}":{
+            "get":{
+                "tags":[
+                    "languages"
+                ],
+                "parameters": [
+                    {
+                    "in": "path",
+                    "name": "_id",
+                    "description": "unique _id of the language.  "
+                    
+                    }
+                ],
+                "summary":"Find a specific language by id",
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema":{
+                            "$ref": "#/definitions/Language"
+                        }
+                       
+                    }
+
+                }
+            }
+        },
+        
+        "/language_string/{_id}":{
+            "get":{
+                "tags":[
+                    "language_string"
+                ],
+
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"_id"
+                    }
+                ],
+
+                "summary":"Get language string for a specifica language base on language_id"
+            }
+        },
+        "/user":{
+            "post":{
+            "tags": [
+                "user"   
+            ],
+            "parameters": [
+                {
+                "in": "body",
+                "name": "body",
+                "description": " New user to create in the system. ",
+                "schema": {
+                    "$ref": "#/definitions/NewUser"
+                }
+                }
+            ],
+            "summary": "Create a new user",
+            "responses": {
+                "201":{
+                    "description": "A new user is created successfully.",
+                    "schema":{
+                        "$ref": "#/definitions/NewUser"
+                    }
+                }
+
+            }
+        }
+    },
+    "/user/token":{
+        "post":{
+        "tags": [
+            "user"   
+        ],
+        "parameters": [
+            {
+            "in": "body",
+            "name": "body",
+            "description": " New user to create in the system. ",
+            "schema": {
+                "$ref": "#/definitions/NewUser"
+            }
+            }
+        ],
+        "summary": "Return acces_token",
+        "responses": {
+            "201":{
+                "description": "acces_token is generated successfully.",
+                "schema":{
+                    "$ref": "#/definitions/NewToken"
+                }
+            }
+
+        }
+    }
+}
+    }
+}

@@ -1,0 +1,29 @@
+[
+{
+"_id":"1",
+"screen_name":"sign_up",
+"controls":[
+    {
+        
+    "control_name"  :"sign_up",
+    "type":"label",
+    "eng_value":"Sign Up",
+    "arb_value":"",
+    "danish_value":""
+    },
+    {
+        "control_name"  :"user_name",
+        "type":"text_field",
+        "eng_value":"user_name",
+        "arb_value":"",
+        "danish_value":""
+    }
+]
+
+},
+{
+"_id":"2",
+"screen_name":"login",
+"controls":[]
+}
+]
